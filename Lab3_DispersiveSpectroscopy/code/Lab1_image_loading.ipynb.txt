@@ -1,0 +1,282 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import PIL\n",
+    "from PIL import Image\n",
+    "import matplotlib.pyplot as plt\n",
+    "import glob"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Let's go through a few different ways to multiple files.\n",
+    "\n",
+    "First we will use the file of filenames produced by acquireImages.py"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#define directories and file name files\n",
+    "\n",
+    "datadir = '/home/simrannerval/Documents/AST325/Lab_1/AST325&326_Updated/AST325&326/'\n",
+    "\n",
+    "dark_folder = 'dark__CCD_2'\n",
+    "\n",
+    "light_folder = 'light__CCD_2'\n",
+    "\n",
+    "dark_filename = 'dark__CCD_2.txt'\n",
+    "\n",
+    "light_filename = 'light__CCD_2.txt'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#we specify that the datatype is a str beacuse np.loadtxt defaults to floats\n",
+    "dark_image_names_from_file = np.loadtxt('{}/{}/{}'.format(datadir, dark_folder, dark_filename), dtype = str)\n",
+    "\n",
+    "light_image_names_from_file = np.loadtxt('{}/{}/{}'.format(datadir, light_folder, light_filename), dtype = str)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#let's check that the names loaded correctly\n",
+    "print(dark_image_names_from_file)\n",
+    "\n",
+    "print(light_image_names_from_file)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now let's try making our own list of filenames since we know the naming pattern. We know that the images are named the same and that they only have different directories, so we only need to make one list of names."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#03d is saying to format the number as an integer of minimum width 3\n",
+    "#i.e. it will add the leading zeros for us!\n",
+    "image_names_from_pattern = ['Capture_{:03d}.tiff'.format(n) for n in range(0, 25)]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Let's check that these look correct\n",
+    "image_names_from_pattern"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "What if we have a lot of files that don't follow a naming pattern? Let's use glob! Note that this version will include the directory."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dark_image_names_glob = glob.glob('{}/{}/*'.format(datadir, dark_folder))\n",
+    "\n",
+    "light_image_names_glob = glob.glob('{}/{}/*'.format(datadir, light_folder))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#let's check that these look correct\n",
+    "print(dark_image_names_glob)\n",
+    "\n",
+    "print(light_image_names_glob)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "What if the names do follow a pattern but maybe not as nice as ours? For example, all images start with 'Capture' but may not be numbered the same way? We can use a wildcard denoted by *"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dark_image_names_glob_pattern = glob.glob('{}/{}/Capture*'.format(datadir, dark_folder))\n",
+    "\n",
+    "light_image_names_glob_pattern = glob.glob('{}/{}/Capture*'.format(datadir, light_folder))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#let's check that these look correct\n",
+    "print(dark_image_names_glob_pattern)\n",
+    "\n",
+    "print(light_image_names_glob_pattern)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Now that we have our filenames, let's load the images and make a 3D array with them."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dark_images_list = []\n",
+    "\n",
+    "for name in dark_image_names_glob_pattern:\n",
+    "\n",
+    "    dark_images_list.append(np.array(Image.open(name)))\n",
+    "\n",
+    "\n",
+    "light_images_list = []\n",
+    "\n",
+    "for name in light_image_names_glob_pattern:\n",
+    "\n",
+    "    light_images_list.append(np.array(Image.open(name)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's turn the list of images into arrays."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dark_images = np.array(dark_images_list)\n",
+    "\n",
+    "light_images = np.array(light_images_list)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's check the shape of the arrays to make sure they make sense."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print('shape of one dark image: {}'.format(np.shape(dark_images_list[0])))\n",
+    "\n",
+    "print('shape of dark image array: {}'.format(np.shape(dark_images)))\n",
+    "\n",
+    "print('shape of one light image: {}'.format(np.shape(light_images_list[0])))\n",
+    "\n",
+    "print('shape of light image array: {}'.format(np.shape(light_images)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "What if I want the mean per pixel across the images? That's easy now that we have arrays!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "mean_dark_image = np.mean(dark_images, axis = 0)\n",
+    "\n",
+    "mean_light_image = np.mean(light_images, axis = 0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's check that we took the mean down the correct axis. Remember we have 3 axes, and from above we expect the resulting array to be the shape of one image, in this case (964, 1288)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#instead of format you can separate with commas in print()\n",
+    "print('Shape of mean dark image:', np.shape(mean_dark_image))\n",
+    "\n",
+    "print('Shape of mean light image:', np.shape(mean_light_image))"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
