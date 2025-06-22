@@ -1,12 +1,12 @@
 # Practical Astronomy Research Repository
 
-Welcome to my repository for **AST 325/326: Practical Astronomy**, University of Toronto.
+This is my repository for **AST 325/326: Practical Astronomy**, University of Toronto.
 
-This repository contains all of my research, data analysis, reports, and code developed during this advanced hands-on astrophysics course, which integrates observational astronomy, data processing, instrumentation, and professional scientific writing.
+This repository contains all of my research, data analysis, reports, and code developed during this astrophysics course, which integrates observational astronomy, data processing, instrumentation, and professional scientific writing.
 
 ---
 
-## 🌌 Course Overview
+## Course Overview
 
 AST 325/326 is a comprehensive practical astronomy lab focused on:
 
@@ -21,5 +21,5 @@ The course bridges theoretical astrophysics with hands-on research experience, p
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
