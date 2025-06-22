@@ -52,6 +52,9 @@ The course bridges theoretical astrophysics with hands-on research experience, p
 │ ├── report/
 │ ├── data/
 │ └── code/
+│
+ ├── GroupLedDiscussions/ # Presentations & slides
+ └── README.md
 ---
 
 ## Research Projects
