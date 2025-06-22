@@ -21,42 +21,6 @@ The course bridges theoretical astrophysics with hands-on research experience, p
 
 ---
 
-## Repository Structure
-
-├── Lab1_BasicPhotonStatistics/
-│ ├── report/ # Lab report (PDF, LaTeX sources)
-│ ├── data/ # Observational data
-│ └── code/ # Python scripts
-│
-├── Lab2_RadioDetectors/
-│ ├── report/
-│ ├── data/
-│ └── code/
-│
-├── Lab3_DispersiveSpectroscopy/
-│ ├── report/
-│ ├── data/
-│ └── code/
-│
-├── Lab4_SpectralAnalysis/
-│ ├── report/
-│ ├── data/
-│ └── code/
-│
-├── Lab5_TelescopeCalibration/
-│ ├── report/
-│ ├── data/
-│ └── code/
-│
-├── Lab6_SupernovaObservation/
-│ ├── report/
-│ ├── data/
-│ └── code/
-│
- ├── GroupLedDiscussions/ # Presentations & slides
- └── README.md
----
-
 ## Research Projects
 
 ### Lab 1: Basic Photon Statistics
